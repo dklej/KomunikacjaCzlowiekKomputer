@@ -1,0 +1,722 @@
+using System;
+using System.ComponentModel;
+using System.Drawing;
+
+using System.Windows.Forms;
+
+namespace Lab_3
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        private int szer = 0;
+        private int wys = 0;
+
+        private void panel1_DockChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_DockChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel3_DockChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel4_DockChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Load(openFileDialog1.FileName);
+                szer = pictureBox1.Image.Width;
+                wys = pictureBox1.Image.Height;
+                pictureBox2.Image = new Bitmap(szer, wys);
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox3.Load(openFileDialog1.FileName);
+                szer = pictureBox1.Image.Width;
+                wys = pictureBox1.Image.Height;
+
+            }
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Color k;
+            int r, g, b;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    if (r < 225) r += 30;
+                    if (g < 225) g += 30;
+                    if (b < 225) b += 30;
+
+                    k = Color.FromArgb(r, g, b);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Color k;
+            int r, g, b;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    if (r > 30) r -= 30;
+                    if (g > 30) g -= 30;
+                    if (b > 30) b -= 30;
+
+                    k = Color.FromArgb(r, g, b);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Color k;
+            int r, g, b;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    r = 255 - r;
+                    g = 255 - g;
+                    b = 255 - b;
+
+                    k = Color.FromArgb(r, g, b);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        //reset
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Color k;
+            int r, g, b;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+
+                    k = Color.FromArgb(r, g, b);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, sumaR, sumaG, sumaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    sumaR = r + ri;
+                    sumaG = g + gi;
+                    sumaB = b + bi;
+                    if (sumaR > 255) sumaR = 255;
+                    if (sumaG > 255) sumaG = 255;
+                    if (sumaB > 255) sumaB = 255;
+
+                    k = Color.FromArgb(sumaR, sumaG, sumaB);
+                    b2.SetPixel(x, y, k );
+                }
+            }
+            pictureBox2.Refresh();
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    skladowaR = r + ri -1;
+                    skladowaG = g + gi -1;
+                    skladowaB = b + bi -1;
+                    if (skladowaR > 255) skladowaR = 255;
+                    if (skladowaG > 255) skladowaG = 255;
+                    if (skladowaB > 255) skladowaB = 255;
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    skladowaR = r - ri ;
+                    skladowaG = g - gi ;
+                    skladowaB = b - bi ;
+                    if (skladowaR < 0) skladowaR = skladowaR * (-1);
+                    if (skladowaG < 0) skladowaG = skladowaG * (-1);
+                    if (skladowaB < 0) skladowaB = skladowaB * (-1);
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    skladowaR = r * ri / 255;
+                    skladowaG = g * gi / 255;
+                    skladowaB = b * bi / 255;
+                    
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    skladowaR = 255 - ((255 - r) * (255 - ri)) / 255;
+                    skladowaG = 255 - ((255 - g) * (255 - gi)) / 255;
+                    skladowaB = 255 - ((255 - b) * (255 - bi)) / 255;
+
+                    
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        //negacja
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    int sumaR, sumaB, sumaG;
+                    sumaR = 255 - r - ri;
+                    sumaG = 255 - g - gi;
+                    sumaB = 255 - b - bi;
+                    if (sumaR < 0) sumaR = -sumaR;
+                    if (sumaG < 0) sumaG = -sumaG;
+                    if (sumaB < 0) sumaB = -sumaB;
+                    skladowaR = 255 - sumaR;
+                    skladowaG = 255 - sumaG;
+                    skladowaB = 255 - sumaB;
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+                    if (r < ri)
+                        skladowaR = r;
+                    else
+                        skladowaR = ri;
+                    if (g < gi)
+                        skladowaG = g;
+                    else
+                        skladowaG = gi;
+                    if (b < bi)
+                        skladowaB = b;
+                    else
+                        skladowaB = bi;
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+                    if (r > ri)
+                        skladowaR = r;
+                    else
+                        skladowaR = ri;
+                    if (g > gi)
+                        skladowaG = g;
+                    else
+                        skladowaG = gi;
+                    if (b > bi)
+                        skladowaB = b;
+                    else
+                        skladowaB = bi;
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    skladowaR = r + ri - 2 * (r * ri)/255;           
+                    skladowaG = g + gi - 2 * (g * gi)/255;
+                    skladowaB = b + bi - 2 * (b * bi)/255;
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    if (r < 127)
+                        skladowaR = 2 * (r * ri) / 255;
+                    else
+                        skladowaR = 255 - 2 * ((255 - r) * (255 - ri)) / 255;
+
+                    if (g < 127)
+                        skladowaG = 2 * (g * gi) / 255;
+                    else
+                        skladowaG = 255 - 2 * ((255 - g) * (255 - gi)) / 255;
+
+                    if (b < 127)
+                        skladowaB = 2 * (b * bi) / 255;
+                    else
+                        skladowaB = 255 - 2 * ((255 - b) * (255 - bi)) / 255;
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    if (ri < 127)
+                        skladowaR = 2 * (r * ri) / 255;
+                    else
+                        skladowaR = 255 - 2 * ((255 - r) * (255 - ri)) / 255;
+
+                    if (gi < 127)
+                        skladowaG = 2 * (g * gi) / 255;
+                    else
+                        skladowaG = 255 - 2 * ((255 - g) * (255 - gi)) / 255;
+
+                    if (bi < 127)
+                        skladowaB = 2 * (b * bi) / 255;
+                    else
+                        skladowaB = 255 - 2 * ((255 - b) * (255 - bi)) / 255;
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    skladowaR = r / (255 - ri) * 255;
+                    if (skladowaR > 255) skladowaR = skladowaR / 255;
+
+                    skladowaG = g / (255 - gi) * 255;
+                    if (skladowaG > 255) skladowaG = skladowaG / 255;
+
+                    skladowaB = b / (255 - bi) * 255;
+                    if (skladowaB > 255) skladowaB = skladowaB / 255;
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    if (ri != 255)
+                        skladowaR = r / (255 - ri);
+                    else
+                        skladowaR = r;
+
+                    if (gi != 255)
+                        skladowaG = g / (255 - gi);
+                    else
+                        skladowaG = g;
+
+                    if (bi != 255)
+                        skladowaB = b / (255 - bi);
+                    else
+                        skladowaB = b;
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    skladowaR = (((r * r) / 255) / (256 - ri));
+                    skladowaG = (((g * g) / 255) / (256 - gi));
+                    skladowaB = (((b * b) / 255) / (256 - bi));
+
+
+                   k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            Bitmap b3 = (Bitmap)pictureBox3.Image;
+            Color k, ki;
+            int r, g, b, ri, gi, bi, skladowaR, skladowaG, skladowaB;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    ki = b3.GetPixel(x, y);
+                    r = k.R;
+                    g = k.G;
+                    b = k.B;
+                    ri = ki.R;
+                    gi = ki.G;
+                    bi = ki.B;
+
+                    skladowaR = 127 * ri /255 + 127 * r / 255; 
+                    skladowaG = 127 * gi / 255 + 127 * g / 255;
+                    skladowaB = 127 * bi / 255 + 127 * b / 255;
+
+
+                    k = Color.FromArgb(skladowaR, skladowaG, skladowaB);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }
+    }
+}
+
