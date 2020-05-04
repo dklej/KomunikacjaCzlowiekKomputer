@@ -11,8 +11,10 @@ namespace Histogram
             InitializeComponent();
         }
 
+
         private void wczytaj_Click(object sender, EventArgs e)
         {
+
            
             OpenFileDialog d = new OpenFileDialog();
             d.Filter = "Obrazy (*.jpg;*.png;*.bmp)|*.jpg;*.png";
@@ -53,6 +55,60 @@ namespace Histogram
             d.Dispose();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int i, j;
+            int sumar, sumag, sumab, sumaszary, ilosc;
+            int[] r = new int[256];
+            int[] g = new int[256];
+            int[] b = new int[256];
+            int[] ggr = new int[256];
+            int[] Dr = new int[256];
+            int[] Dg = new int[256];
+            int[] Db = new int[256];
+            int[] Dgray = new int[256];
+            Color k;
 
+            for (i = 0; i < 256; i++)
+            {
+                r[i] = 0;
+                g[i] = 0;
+                b[i] = 0;
+                ggr[i] = 0;
+            }
+
+            picture.Height = picture.Image.Height;
+            picture.Width = picture.Image.Width;
+
+            for (i = 0; i < picture.Width; i++)
+                for (j = 0; j < picture.Height; j++)
+                {
+                    k = picture.Image -> Pixels[i][j];
+                    r[GetRValue(k)]++;
+                    g[GetGValue(k)]++;
+                    b[GetBValue(k)]++;
+                    k = ObrazMono->Canvas->Pixels[i][j];
+                    ggr[GetRValue(k)]++;
+                }
+
+            ilosc = picture.Width * picture.Height;
+            sumar = 0;
+            sumag = 0;
+            sumab = 0;
+            sumaszary = 0;
+            for (i = 0; i < 256; i++)
+            {
+                sumar += (r[i] / ilosc);
+                sumag += (g[i] / ilosc);
+                sumab += (b[i] / ilosc);
+                sumaszary += (ggr[i] / ilosc);
+                Dr[i] += sumar;
+                Dg[i] += sumag;
+                Db[i] += sumab;
+                Dgray[i] += sumaszary;
+            }
+
+            
+        }
     }
 }
