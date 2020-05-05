@@ -1,0 +1,487 @@
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+
+namespace Lab_3
+{
+
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        private int szer = 0;
+        private int wys = 0;
+        public int suma_masek = 0;
+
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Load(openFileDialog1.FileName);
+                szer = pictureBox1.Image.Width;
+                wys = pictureBox1.Image.Height;
+                pictureBox2.Image = new Bitmap(szer, wys);
+            }
+        }
+
+
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            {
+                Bitmap b1 = (Bitmap)pictureBox1.Image;
+                Bitmap b2 = (Bitmap)pictureBox2.Image;
+                Color k;
+                int r, g, b;
+                for (int x = 0; x < szer; x++)
+                {
+                    for (int y = 0; y < wys; y++)
+                    {
+                        k = b2.GetPixel(x, y);
+                        r = k.R;
+                        g = k.G;
+                        b = k.B;
+                        k = Color.FromArgb(r, g, b);
+                        b1.SetPixel(x, y, k);
+                    }
+                }
+                pictureBox2.Refresh();
+            }
+        }
+
+
+
+
+        //maska 3x3
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Color k1, k2, k3, k4, k5, k6, k7, k8, k9;
+            int r, g, b;
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+
+            int M1 = Convert.ToInt32(textBox1.Text);
+            int M2 = Convert.ToInt32(textBox2.Text);
+            int M3 = Convert.ToInt32(textBox3.Text);
+            int M4 = Convert.ToInt32(textBox4.Text);
+            int M5 = Convert.ToInt32(textBox5.Text);
+            int M6 = Convert.ToInt32(textBox6.Text);
+            int M7 = Convert.ToInt32(textBox7.Text);
+            int M8 = Convert.ToInt32(textBox8.Text);
+            int M9 = Convert.ToInt32(textBox9.Text);
+
+            suma_masek = M1 + M2 + M3 + M4 + M5 + M6 + M7 + M8 + M9;
+            if(suma_masek == 0)
+            {
+                suma_masek = 1;
+            } 
+
+            for (int x = 2; x < szer - 1; x++)
+            {
+                for (int y = 2; y < wys - 1; y++)
+                {
+                    k1 = b1.GetPixel(x - 1, y - 1);
+                    k2 = b1.GetPixel(x, y - 1);
+                    k3 = b1.GetPixel(x + 1, y - 1);
+                    k4 = b1.GetPixel(x - 1, y);
+                    k5 = b1.GetPixel(x, y);
+                    k6 = b1.GetPixel(x + 1, y);
+                    k7 = b1.GetPixel(x - 1, y + 1);
+                    k8 = b1.GetPixel(x, y + 1);
+                    k9 = b1.GetPixel(x + 1, y + 1);
+
+                    r = k1.R * M1 + k2.R * M2 + k3.R * M3 + k4.R * M4 + k5.R * M5
+                    + k6.R * M6 + k7.R * M7 + k8.R * M8 + k9.R * M9;
+                    r = r / suma_masek;
+                    if (r > 255) r = 255;
+                    if (r < 0) r = 0;
+
+                    g = k1.G * M1 + k2.G * M2 + k3.G * M3 + k4.G * M4 + k5.G * M5
+                        + k6.G * M6 + k7.G * M7 + k8.G * M8 + k9.G * M9;
+                    g = g / suma_masek;
+                    if (g > 255) g = 255;
+                    if (g < 0) g = 0;
+
+                    b = k1.B * M1 + k2.B * M2 + k3.B * M3 + k4.B * M4 + k5.B * M5
+                        + k6.B * M6 + k7.B * M7 + k8.B * M8 + k9.B * M9;
+                    b = b / suma_masek;
+                    if (b > 255) b = 255;
+                    if (b < 0) b = 0;
+
+                    b2.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+
+        // funkcja zmeniajaca wartosci masek
+
+        private void zmieniaj(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+        {
+            Color k1, k2, k3, k4, k5, k6, k7, k8, k9;
+            int r, g, b;
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+
+
+            int M1 = a1;
+            int M2 = a2;
+            int M3 = a3;
+            int M4 = a4;
+            int M5 = a5;
+            int M6 = a6;
+            int M7 = a7;
+            int M8 = a8;
+            int M9 = a9;
+
+            suma_masek = M1 + M2 + M3 + M4 + M5 + M6 + M7 + M8 + M9;
+            if (suma_masek == 0)
+            {
+                suma_masek = 1;
+            }
+
+            for (int x = 2; x < szer - 1; x++)
+            {
+                for (int y = 2; y < wys - 1; y++)
+                {
+                    k1 = b1.GetPixel(x - 1, y - 1);
+                    k2 = b1.GetPixel(x, y - 1);
+                    k3 = b1.GetPixel(x + 1, y - 1);
+                    k4 = b1.GetPixel(x - 1, y);
+                    k5 = b1.GetPixel(x, y);
+                    k6 = b1.GetPixel(x + 1, y);
+                    k7 = b1.GetPixel(x - 1, y + 1);
+                    k8 = b1.GetPixel(x, y + 1);
+                    k9 = b1.GetPixel(x + 1, y + 1);
+
+                    r = k1.R * M1 + k2.R * M2 + k3.R * M3 + k4.R * M4 + k5.R * M5
+                    + k6.R * M6 + k7.R * M7 + k8.R * M8 + k9.R * M9;
+                    r = r / suma_masek;
+                    if (r > 255) r = 255;
+                    if (r < 0) r = 0;
+
+                    g = k1.G * M1 + k2.G * M2 + k3.G * M3 + k4.G * M4 + k5.G * M5
+                        + k6.G * M6 + k7.G * M7 + k8.G * M8 + k9.G * M9;
+                    g = g / suma_masek;
+                    if (g > 255) g = 255;
+                    if (g < 0) g = 0;
+
+                    b = k1.B * M1 + k2.B * M2 + k3.B * M3 + k4.B * M4 + k5.B * M5
+                        + k6.B * M6 + k7.B * M7 + k8.B * M8 + k9.B * M9;
+                    b = b / suma_masek;
+                    if (b > 255) b = 255;
+                    if (b < 0) b = 0;
+
+                    b2.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            zmieniaj(1, 1, 1, 1, 1, 1, 1, 1, 1);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            zmieniaj(1,2,1,2,4,2,1,2,1);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            zmieniaj(-1, -1, -1, 0, 0, 0, 1, 1, 1);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            zmieniaj(1,2,1,0,0,0,-1,-2,-1);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Color k1, k2, k3, k4;
+            int r, g, b;
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+
+
+            for (int x = 2; x < szer - 1; x++)
+            {
+                for (int y = 2; y < wys - 1; y++)
+                {
+                    k1 = b1.GetPixel(x , y);
+                    k2 = b1.GetPixel(x + 1, y + 1);
+                    k3 = b1.GetPixel(x + 1, y);
+                    k4 = b1.GetPixel(x , y + 1);
+
+                    // r
+                    int temp1 = k1.R - k2.R;
+                    int temp2 = k3.R - k4.R;
+                    if(temp1 < 0)
+                    {
+                        temp1 = temp1 * -1;
+                    }
+                    if(temp2 < 0)
+                    {
+                        temp2 = temp2 * -1;
+                    }
+                    r = temp1 + temp2;
+                    if (r > 255) r = 255;
+
+                    // g
+                    temp1 = k1.G - k2.G;
+                    temp2 = k3.G - k4.G;
+                    if (temp1 < 0)
+                    {
+                        temp1 = temp1 * -1;
+                    }
+                    if (temp2 < 0)
+                    {
+                        temp2 = temp2 * -1;
+                    }
+                    g = temp1 + temp2;
+                    if (g > 255) g = 255;
+
+                    //b
+                    temp1 = k1.B - k2.B;
+                    temp2 = k3.B - k4.B;
+                    if (temp1 < 0)
+                    {
+                        temp1 = temp1 * -1;
+                    }
+                    if (temp2 < 0)
+                    {
+                        temp2 = temp2 * -1;
+                    }
+                    b = temp1 + temp2;
+                    if (b > 255) b = 255;
+
+
+                    b2.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            zmieniaj(-1, 0, -1, 0, 4, 0, -1, 0, -1);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            Color k1, k2, k3, k4, k5, k6, k7, k8, k9;
+            int r, g, b;
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+
+
+
+            for (int x = 2; x < szer - 1; x++)
+            {
+                for (int y = 2; y < wys - 1; y++)
+                {
+                    int minR = 255, minG = 255, minB = 255;
+
+                    k1 = b1.GetPixel(x - 1, y - 1);
+                    k2 = b1.GetPixel(x, y - 1);
+                    k3 = b1.GetPixel(x + 1, y - 1);
+                    k4 = b1.GetPixel(x - 1, y);
+                    k5 = b1.GetPixel(x, y);
+                    k6 = b1.GetPixel(x + 1, y);
+                    k7 = b1.GetPixel(x - 1, y + 1);
+                    k8 = b1.GetPixel(x, y + 1);
+                    k9 = b1.GetPixel(x + 1, y + 1);
+
+
+                    // min R
+                    if (k1.R < minR)
+                    {
+                        minR = k1.R;
+                    }
+                    if (k2.R < minR)
+                    {
+                        minR = k2.R;
+                    }
+                    if (k3.R < minR)
+                    {
+                        minR = k3.R;
+                    }
+                    if (k4.R < minR)
+                    {
+                        minR = k4.R;
+                    }
+                    if (k5.R < minR)
+                    {
+                        minR = k5.R;
+                    }
+                    if (k6.R < minR)
+                    {
+                        minR = k6.R;
+                    }
+                    if (k7.R < minR)
+                    {
+                        minR = k7.R;
+                    }
+                    if (k8.R < minR)
+                    {
+                        minR = k8.R;
+                    }
+                    if (k9.R < minR)
+                    {
+                        minR = k9.R;
+                    }
+                    r = minR;
+
+                    //min G
+                    if (k1.G < minG) minG = k1.G;
+                    if (k2.G < minG) minG = k2.G;
+                    if (k3.G < minG) minG = k3.G;
+                    if (k4.G < minG) minG = k4.G;
+                    if (k5.G < minG) minG = k5.G;
+                    if (k6.G < minG) minG = k6.G;
+                    if (k7.G < minG) minG = k7.G;
+                    if (k8.G < minG) minG = k8.G;
+                    if (k9.G < minG) minG = k9.G;
+                    g = minG;
+
+                    // min B
+
+                    if (k1.B < minB) minB = k1.B;
+                    if (k2.B < minB) minB = k2.B;
+                    if (k3.B < minB) minB = k3.B;
+                    if (k4.B < minB) minB = k4.B;
+                    if (k5.B < minB) minB = k5.B;
+                    if (k6.B < minB) minB = k6.B;
+                    if (k7.B < minB) minB = k7.B;
+                    if (k8.B < minB) minB = k8.B;
+                    if (k9.B < minB) minB = k9.B;
+                    b = minB;
+
+                    b2.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            Color k1, k2, k3, k4, k5, k6, k7, k8, k9;
+            int r, g, b;
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+
+
+
+            for (int x = 2; x < szer - 1; x++)
+            {
+                for (int y = 2; y < wys - 1; y++)
+                {
+                    int maxR = 0, maxG = 0, maxB = 0;
+
+                    k1 = b1.GetPixel(x - 1, y - 1);
+                    k2 = b1.GetPixel(x, y - 1);
+                    k3 = b1.GetPixel(x + 1, y - 1);
+                    k4 = b1.GetPixel(x - 1, y);
+                    k5 = b1.GetPixel(x, y);
+                    k6 = b1.GetPixel(x + 1, y);
+                    k7 = b1.GetPixel(x - 1, y + 1);
+                    k8 = b1.GetPixel(x, y + 1);
+                    k9 = b1.GetPixel(x + 1, y + 1);
+
+
+                    // min R
+                    if (k1.R > maxR) maxR = k1.R;
+                    if (k2.R > maxR) maxR = k2.R;
+                    if (k3.R > maxR) maxR = k3.R;
+                    if (k4.R > maxR) maxR = k4.R;
+                    if (k5.R > maxR) maxR = k5.R;
+                    if (k6.R > maxR) maxR = k6.R;
+                    if (k7.R > maxR) maxR = k7.R;
+                    if (k8.R > maxR) maxR = k8.R;
+                    if (k9.R > maxR) maxR = k9.R;
+                    r = maxR;
+
+                    //min G
+                    if (k1.G > maxG) maxG = k1.G;
+                    if (k2.G > maxG) maxG = k2.G;
+                    if (k3.G > maxG) maxG = k3.G;
+                    if (k4.G > maxG) maxG = k4.G;
+                    if (k5.G > maxG) maxG = k5.G;
+                    if (k6.G > maxG) maxG = k6.G;
+                    if (k7.G > maxG) maxG = k7.G;
+                    if (k8.G > maxG) maxG = k8.G;
+                    if (k9.G > maxG) maxG = k9.G;
+                    g = maxG;
+
+                    // min B
+                    if (k1.B > maxB) maxB = k1.B;
+                    if (k2.B > maxB) maxB = k2.B;
+                    if (k3.B > maxB) maxB = k3.B;
+                    if (k4.B > maxB) maxB = k4.B;
+                    if (k5.B > maxB) maxB = k5.B;
+                    if (k6.B > maxB) maxB = k6.B;
+                    if (k7.B > maxB) maxB = k7.B;
+                    if (k8.B > maxB) maxB = k8.B;
+                    if (k9.B > maxB) maxB = k9.B;
+                    b = maxB;
+
+                    b2.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+            pictureBox2.Refresh();
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            Color k1, k2, k3, k4, k5, k6, k7, k8, k9;
+            int r, g, b;
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+
+
+
+            for (int x = 2; x < szer - 1; x++)
+            {
+                for (int y = 2; y < wys - 1; y++)
+                {
+                    k1 = b1.GetPixel(x - 1, y - 1);
+                    k2 = b1.GetPixel(x, y - 1);
+                    k3 = b1.GetPixel(x + 1, y - 1);
+                    k4 = b1.GetPixel(x - 1, y);
+                    k5 = b1.GetPixel(x, y);
+                    k6 = b1.GetPixel(x + 1, y);
+                    k7 = b1.GetPixel(x - 1, y + 1);
+                    k8 = b1.GetPixel(x, y + 1);
+                    k9 = b1.GetPixel(x + 1, y + 1);
+
+                    int[] tabR = { k1.R, k2.R, k3.R, k4.R, k5.R, k6.R, k7.R, k8.R, k9.R };
+                    int[] tabG = { k1.G, k2.G, k3.G, k4.G, k5.G, k6.G, k7.G, k8.G, k9.G };
+                    int[] tabB = { k1.B, k2.B, k3.B, k4.B, k5.B, k6.B, k7.B, k8.B, k9.B };
+                    Array.Sort(tabR);
+                    Array.Sort(tabG);
+                    Array.Sort(tabB);
+                    r = tabR[4];
+                    g = tabG[4];
+                    b = tabB[4];
+
+
+                    b2.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+            pictureBox2.Refresh();
+        }
+    }
+    
+}
+
